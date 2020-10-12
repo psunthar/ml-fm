@@ -71,7 +71,7 @@ opt = keras.optimizers.Adam(learning_rate=0.005)
 model.compile(optimizer=opt,loss='mse')
 
 
-model.fit(x=X_train_pca,y=y_train,validation_data=(X_test_pca,y_test),epochs=100)
+model.fit(x=X_train_pca,y=y_train,validation_data=(X_test_pca,y_test),epochs=500)
 from keras.models import model_from_json
 model_json=model.to_json()
 with open('model.json','w') as json_file:
