@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
 
-df=pd.read_csv('/home/ram/Desktop/R=2.6/training1.csv')
+df=pd.read_csv('training1.csv')
 Y=df['del_p'].values
 X=df.drop(['del_p','R','Re'], axis=1)
 
@@ -25,7 +25,7 @@ pca.fit(X_train)
 X_train_pca=pca.transform(X_train)
 
 
-X_test1=pd.read_csv('/home/ram/Desktop/R=2.6/testing_fro_Re.csv')
+X_test1=pd.read_csv('testing_fro_Re.csv')
 
 
 Actual1=pd.DataFrame(data=X_test1,columns=['del_p'])        # testing Target data from Re classification
@@ -71,7 +71,7 @@ opt = keras.optimizers.Adam(learning_rate=0.005)
 model.compile(optimizer=opt,loss='mse')
 
 
-model.fit(x=X_train_pca,y=y_train,validation_data=(X_test_pca,y_test),epochs=500)
+model.fit(x=X_train_pca,y=y_train,validation_data=(X_test_pca,y_test),epochs=100)
 from keras.models import model_from_json
 model_json=model.to_json()
 with open('model.json','w') as json_file:
