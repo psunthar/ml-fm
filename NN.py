@@ -20,7 +20,7 @@ X_train=scaler.fit_transform(X_train)
 X_test=scaler.transform(X_test)
 
 
-pca=PCA()
+pca=PCA(n_components=4)
 pca.fit(X_train)
 X_train_pca=pca.transform(X_train)
 
@@ -33,23 +33,24 @@ Actual1.to_csv('actual1.csv', index=False)
 
 X_test1.drop(['del_p','Re','R'],axis=1,inplace=True)
 X_test1=scaler.transform(X_test1.values)
-X_test1=pd.DataFrame(data=X_test1,columns=['velocity','dia1','density','viscoscity','dia2'] )
+#X_test1=pd.DataFrame(data=X_test1,columns=['velocity','dia1','density','viscoscity'] )
 
 
-X_testa=pd.DataFrame(data=X_test, columns=['velocity','dia1','density','viscoscity','dia2'])
+#X_testa=pd.DataFrame(data=X_test, columns=['velocity','dia1','density','viscoscity'])
 
                         
-X_test_pca=pca.transform(X_testa)                      #transforming  testing data_inside training range
+X_test_pca=pca.transform(X_test)                      #transforming  testing data_inside training range
 X_test1_pca=pca.transform(X_test1)   
 
 
-X_test1=pd.DataFrame(data=X_test1_pca,columns=['velocity','dia1','density','viscoscity','dia2'] )
+X_test1=pd.DataFrame(data=X_test1_pca,columns=['velocity','dia1','density','viscoscity'] )
 X_test1.to_csv('X_test1.csv', index=False)                  # saving training data from Re classification
+
 
 Y_testa=pd.DataFrame(data=y_test, columns=['del_p'])
 Y_testa.to_csv('testing_Y.csv',index=False)                 # saving testing target data from main training file
 
-X_testa=pd.DataFrame(data=X_test_pca, columns=['velocity','dia1','density','viscoscity','dia2'])
+X_testa=pd.DataFrame(data=X_test_pca, columns=['velocity','dia1','density','viscoscity'])
 X_testa.to_csv('testing_X.csv',index=False)                 # saving testing data from main training data
 
 
@@ -72,6 +73,7 @@ model.compile(optimizer=opt,loss='mse')
 
 
 model.fit(x=X_train_pca,y=y_train,validation_data=(X_test_pca,y_test),epochs=500)
+#model.save('model.h5')
 from keras.models import model_from_json
 model_json=model.to_json()
 with open('model.json','w') as json_file:
