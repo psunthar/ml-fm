@@ -7,7 +7,7 @@ import pandas as pd
 import keras
 from keras.models import model_from_json
 
-
+#loaded_model=load_model('model.h5')
 
 json_file=open('model.json','r')
 loaded_model_json= json_file.read()
@@ -17,7 +17,7 @@ loaded_model.load_weights('model.h5')
 print('loaded model_from disk')
 
 
-opt = keras.optimizers.Adam(learning_rate=0.01)
+opt = keras.optimizers.Adam(learning_rate=0.005)
 loaded_model.compile(optimizer=opt,loss='mse')
 X_test=pd.read_csv('testing_X.csv')
 X_test1=pd.read_csv('X_test1.csv') # testing data split based on Re
