@@ -60,10 +60,10 @@ from tensorflow import keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 model =Sequential()
-model.add(Dense(20,activation='relu'))
-model.add(Dense(12,activation='relu'))
-model.add(Dense(9,activation='relu'))
-model.add(Dense(6,activation='relu'))
+#model.add(Dense(20,activation='relu'))
+model.add(Dense(15,activation='tanh'))
+model.add(Dense(9,activation='tanh'))
+model.add(Dense(6,activation='tanh'))
 model.add(Dense(1, activation='linear'))
 #lr_schedule = keras.optimizers.schedules.ExponentialDecay(
 #    initial_learning_rate=1e-1,
@@ -74,7 +74,7 @@ opt = keras.optimizers.Adam(learning_rate=0.005)
 model.compile(optimizer=opt,loss='mse')
 
 
-model.fit(x=X_train_pca,y=y_train,validation_data=(X_test_pca,y_test),epochs=100)
+model.fit(x=X_train_pca,y=y_train,validation_data=(X_test_pca,y_test),epochs=150)
 
 plt.plot(model.history.history['loss'])
 plt.plot(model.history.history['val_loss'])
