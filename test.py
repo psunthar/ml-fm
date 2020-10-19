@@ -9,6 +9,7 @@ from keras.models import model_from_json
 
 #loaded_model=load_model('model.h5')
 
+
 json_file=open('model.json','r')
 loaded_model_json= json_file.read()
 json_file.close()
@@ -23,7 +24,6 @@ X_test=pd.read_csv('testing_X.csv')
 X_test1=pd.read_csv('X_test1.csv') # testing data split based on Re
 
 #Actual1=pd.DataFrame(data=X_test1,columns=['del_p'])
-#print(Actual)
 
 #X_test1.drop(['del_p','Re','R'],axis=1,inplace=True)
 

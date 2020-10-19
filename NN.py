@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler 
 from sklearn.model_selection import train_test_split
@@ -59,7 +60,8 @@ from tensorflow import keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 model =Sequential()
-model.add(Dense(15,activation='relu'))
+model.add(Dense(20,activation='relu'))
+model.add(Dense(12,activation='relu'))
 model.add(Dense(9,activation='relu'))
 model.add(Dense(6,activation='relu'))
 model.add(Dense(1, activation='linear'))
@@ -72,7 +74,15 @@ opt = keras.optimizers.Adam(learning_rate=0.005)
 model.compile(optimizer=opt,loss='mse')
 
 
-model.fit(x=X_train_pca,y=y_train,validation_data=(X_test_pca,y_test),epochs=500)
+model.fit(x=X_train_pca,y=y_train,validation_data=(X_test_pca,y_test),epochs=100)
+
+plt.plot(model.history.history['loss'])
+plt.plot(model.history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train','test'],loc='upper left')
+plt.show()
 #model.save('model.h5')
 from keras.models import model_from_json
 model_json=model.to_json()
