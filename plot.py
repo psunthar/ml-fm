@@ -4,11 +4,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from pylab import savefig
+from sklearn.metrics import r2_score
 
 
 predicted=pd.read_csv('predict.csv')
 actual=pd.read_csv('testing_Y.csv')
-actual1=pd.read_csv('actual1.csv')
+actual1=pd.read_csv('Y_test1.csv')
 predicted1=pd.read_csv('predict1.csv')
 
 
@@ -66,5 +67,18 @@ plt.xscale('log')
 plt.xlabel('Re')
 plt.ylabel('Ci')
 plt.show()
+#print("Training Range R^2 value")
+#r2_score(ci,abra['Ci'].values)
+#print("Outside Training range R^2 value")
 
+##############################################################################################################
+losses=pd.read_csv('losses.csv')
+plt.plot(losses['test_loss'])
+plt.plot(losses['val_loss'])
+
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train','test'],loc='upper left')
+plt.show()
 
