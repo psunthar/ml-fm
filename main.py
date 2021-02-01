@@ -2,6 +2,8 @@
 
 import numpy as np
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 n=10000
 bv=np.zeros((n))
@@ -59,7 +61,8 @@ data['Re']=Re
 c1=np.divide(a,Re)
 c2=np.divide(b,Re**(0.5))
 ci=c1+c2+c
-#data['Ci']=ci
+data['Ci']=ci
+
 
 del_p=ci*(0.5*dens*bv**2)
 data['del_p']=del_p
@@ -74,7 +77,7 @@ testing_from_Re.to_csv('testing_fro_Re.csv',index=False)
 #print(testing_from_Re)
 data2=data[(data['Re']>=35) & ( data['Re']<=600)]
 
-data['Ci']=ci
+#data['Ci']=ci
 data.to_csv('Synthetic_data.csv',index=False)
 #data.drop(columns=['R','Re'],axis=1,inplace=True)   
 data2.to_csv('training1.csv',index=False)

@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 
 df=pd.read_csv('training1.csv')
 Y=df['del_p'].values
-X=df.drop(['del_p','R'], axis=1)
+X=df.drop(['del_p','R','Ci'], axis=1)
 
 
 X=X.values
