@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pylab import savefig
 from sklearn.metrics import r2_score
+from sklearn.metrics import mean_squared_error
+from scipy.stats import chisquare
 
 
 predicted=pd.read_csv('predict.csv')
@@ -32,10 +34,14 @@ plt.show()
 
 abra=pd.read_csv('X_test_for_ci_plot.csv')
 kadabra=pd.read_csv('X_test1_for_ci_plot.csv')
-ci=np.divide(predicted['predict'],(0.5*abra['density']*abra['velocity']**2))
-ci1=np.divide(predicted1['predict'],(0.5*kadabra['density']*kadabra['velocity']**2))
-abra['Ci']=ci
-kadabra['Ci']=ci1
+pci=np.divide(predicted['predict'],(0.5*abra['density']*abra['velocity']**2))
+pci1=np.divide(predicted1['predict'],(0.5*kadabra['density']*kadabra['velocity']**2))
+abra['Ci']=pci
+
+abra.to_csv('abra.csv')
+
+kadabra['Ci']=pci1
+kadabra.to_csv('kadabra.csv')
 #print(ci)
 #abra=pd.concat([ci,abra],axis=1)
 #kadabra=pd.concat([ci1,kadabra],axis=1)
@@ -64,6 +70,7 @@ ci=c1+c2+c
 plt.plot(Re,ci)
 plt.xscale('log')
 #plt.yscale('log')
+#plt.ylim([1, 4])
 plt.xlabel('Re')
 plt.ylabel('Ci')
 plt.show()
@@ -81,4 +88,26 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train','test'],loc='upper left')
 plt.show()
+#################################################################################################################
+aCi=pd.read_csv('r_square_test.csv')        #actual Ci values
+aCi1=pd.read_csv('r_square_test1.csv')      #actual Ci1 values
+aCi=aCi.to_numpy()
+pci=pci.to_numpy()
+aCi1=aCi1.to_numpy()
+pci1=pci1.to_numpy()
+#X=((aCi-pci)**2)/(aCi)
+#print(X)
+#print(np.sum(X))
+
+aCi=aCi.reshape(934)
+aCi1=aCi1.reshape(669)
+e=aCi-pci
+error=np.divide(e,aCi)
+error=np.square(error)
+print(sum(error)/934)
+e1=aCi1-pci1
+error1=np.divide(e1,aCi1)
+error1=np.square(error1)
+print(sum(error1)/669)
+
 

@@ -8,14 +8,22 @@ from sklearn.model_selection import train_test_split
 
 df=pd.read_csv('training1.csv')
 Y=df['del_p'].values
-X=df.drop(['del_p','R','Re'], axis=1)
+X=df.drop(['del_p','R'], axis=1)
 
 
 X=X.values
 
 X_train,X_test,y_train,y_test=train_test_split(X,Y,test_size=.1,random_state=101)
-
-
+re_ci=pd.DataFrame(data=X_test,columns=['velocity','dia1','density','viscoscity','dia2','Re','Ci'])
+re_ci.drop(['velocity','dia1','density','dia2','viscoscity','Re'], axis=1,inplace=True)
+plt.show()
+re_ci.to_csv('r_square_test.csv',index=False)
+X_train=pd.DataFrame(data=X_train,columns=['velocity','dia1','density','viscoscity','dia2','Re','Ci'])
+X_train=X_train.drop(['Re','Ci'],axis=1)
+X_train=X_train.to_numpy()
+X_test=pd.DataFrame(data=X_test,columns=['velocity','dia1','density','viscoscity','dia2','Re','Ci'])
+X_test=X_test.drop(['Re','Ci'],axis=1)
+X_test=X_test.to_numpy()
 
 scaler=StandardScaler()
 X_train=scaler.fit_transform(X_train)
@@ -28,6 +36,7 @@ X_train_pca=pca.transform(X_train)
 
 
 X_test1=pd.read_csv('testing_fro_Re.csv')
+X_test1.drop(['Ci'],axis=1,inplace=True)
 
 
 Y_test1=pd.DataFrame(data=X_test1,columns=['del_p'])        # testing Target data from Re classification
@@ -71,16 +80,13 @@ model.add(Dense(15,activation='relu'))
 model.add(Dense(9,activation='relu'))
 model.add(Dense(6,activation='relu'))
 model.add(Dense(1, activation='linear'))
-#lr_schedule = keras.optimizers.schedules.ExponentialDecay(
-#    initial_learning_rate=1e-1,
-#    decay_steps=100,
-#    decay_rate=0.95)
+
 opt = keras.optimizers.Adam(learning_rate=0.005)
 
 model.compile(optimizer=opt,loss='mse')
 
 
-model.fit(x=X_train_pca,y=y_train,validation_data=(X_test_pca_whole,Y_test_whole),epochs=100)
+model.fit(x=X_train_pca,y=y_train,validation_data=(X_test_pca_whole,Y_test_whole),epochs=200)
 A=np.log(model.history.history['loss'])
 B=np.log(model.history.history['val_loss'])
 losses=pd.DataFrame(data=A,columns=['test_loss'])
