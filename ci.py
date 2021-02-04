@@ -22,6 +22,9 @@ X_test1.drop(['del_p','R'],axis=1,inplace=True)
 #print(X_test1)
 X_test1.to_csv('X_test1_for_ci_plot.csv',index=False)
 re.to_csv('X_test_for_ci_plot.csv',index=False)
+df1=pd.read_csv('testing_fro_Re.csv')
+df1.drop(['R','del_p','velocity','dia1','density','dia2','Re','viscosity'], axis=1,inplace=True)
+df1.to_csv('r_square_test1.csv',index=False)
 
 
 #print(re_ci)
