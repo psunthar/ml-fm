@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
-from numpy import savetxt
+from numpy import save
 imageH=4
 for r in range(1,100):
     l=np.random.uniform(2,20)
@@ -50,4 +50,4 @@ for r in range(1,100):
     
         print(np.shape((a)))
     plt.imsave('image' +str(r)+'.png', np.array(img3), cmap=cm.gray)
-    savetxt('data.csv', img3, delimiter=',')
+save('data', a)
