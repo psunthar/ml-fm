@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
+from numpy import savetxt
 imageH=4
 for r in range(1,100):
     l=np.random.uniform(2,20)
-    Tl=np.random.uniform(22,50)
+    Tl=np.random.uniform(50,50)
     l1=2
     AR=np.random.uniform(1.1,7)
     d0=2
@@ -34,12 +35,19 @@ for r in range(1,100):
        # print([i,j,f1(x)])
             img[i,j]=1
 
-#print(img)
+
     img1=img.T
 
-#print(img2)
+
     plt.imsave('filename.png', np.array(img1), cmap=cm.gray)
     img2=np.flip(img1,0)
     img3=np.concatenate((img1, img2))
-
+    if r==1:
+        a=img3
+    else:
+        
+        a=np.dstack((a,img3))
+    
+        print(np.shape((a)))
     plt.imsave('image' +str(r)+'.png', np.array(img3), cmap=cm.gray)
+    savetxt('data.csv', img3, delimiter=',')
