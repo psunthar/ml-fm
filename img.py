@@ -3,12 +3,15 @@ import matplotlib.cm as cm
 import numpy as np
 from numpy import save
 imageH=4
+AR1=[]
+np.array(AR1)
 for r in range(1,100):
     l1=np.random.uniform(1,5)   #upto stenosis
     l=np.random.uniform(2,20)   #stenosis
     Tl=np.random.uniform(40,50) #total length
     
     AR=np.random.uniform(1.1,7)
+    AR1.append(AR)
     d0=np.random.uniform(0.5,4)
     d1=(d0)/np.sqrt(AR)
     k=imageH-d0
@@ -50,3 +53,5 @@ for r in range(1,100):
     plt.imsave('image' +str(r)+'.png', np.array(img3), cmap=cm.gray)
 print(np.shape(img3))
 save('data', a)
+save('AR_data',AR1)
+
