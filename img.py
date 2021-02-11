@@ -3,7 +3,7 @@ import matplotlib.cm as cm
 import numpy as np
 from numpy import save
 imageH=4
-for r in range(1,10):
+for r in range(1,100):
     l1=np.random.uniform(1,5)   #upto stenosis
     l=np.random.uniform(2,20)   #stenosis
     Tl=np.random.uniform(40,50) #total length
@@ -14,8 +14,6 @@ for r in range(1,10):
     k=imageH-d0
     k1=imageH-d1
 
-
-
     def f1(x):
         if x<l1:
             return k
@@ -24,9 +22,6 @@ for r in range(1,10):
         if x>=l1+l:
             return k
         
-
-
-    
     dx=0.1
     #img=np.ones((600,100))
     img=np.zeros((int(Tl/dx),int(imageH/dx)))
@@ -53,4 +48,5 @@ for r in range(1,10):
     
        # print(np.shape((a)))
     plt.imsave('image' +str(r)+'.png', np.array(img3), cmap=cm.gray)
+print(np.shape(img3))
 save('data', a)
