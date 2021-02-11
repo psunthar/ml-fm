@@ -9,6 +9,8 @@ from tensorflow.keras.layers import Dense, Dropout
 from keras.layers import Conv2D
 from keras.layers import MaxPooling2D
 from keras.layers import Flatten
+import matplotlib.pyplot as plt
+from numpy import save
 Xdata = load('data.npy')
 Ydata = load('AR_data.npy')
 Y=np.dstack(Ydata)
@@ -29,3 +31,9 @@ model.compile(optimizer=opt,loss='mse')
 model.fit(x=X_train,y=y_train,validation_data=(X_test,y_test),epochs=10)
 sol=model.predict(X_test) 
 print(sol)
+save('prediction',sol)        # saving predicted results
+save('testData',y_test)
+#plt.scatter(y_test.reshape(30),sol.reshape(30))
+#plt.xlabel('original')
+#plt.ylabel('predicted')
+#plt.show()
