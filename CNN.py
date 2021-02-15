@@ -11,6 +11,7 @@ from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 import matplotlib.pyplot as plt
 from numpy import save
+import cv2
 Xdata = load('data.npy')
 Ydata = load('AR_data.npy')
 Y=np.dstack(Ydata)
@@ -21,14 +22,16 @@ print(np.shape(X_train))
 X_train = X_train.reshape(-1, 699, 80, 1)
 X_test = X_test.reshape(-1, 699, 80, 1)
 model =Sequential()
-model.add(Conv2D(3,(10,10), activation= 'relu',kernel_initializer='he_uniform'))
-model.add(MaxPooling2D((2, 2)))
+model.add(Conv2D(14,(40,41), activation= 'relu',kernel_initializer='he_uniform'))
+model.add(MaxPooling2D((4,4)))
+model.add(Conv2D(3,(7,7), activation= 'relu'))
+model.add(MaxPooling2D((2,2)))
 model.add(Flatten())
-model.add(Dense(10, activation='relu', kernel_initializer='he_uniform'))
+model.add(Dense(4, activation='relu'))
 model.add(Dense(1, activation='linear'))
 opt = keras.optimizers.Adam(learning_rate=0.01)
 model.compile(optimizer=opt,loss='mse')
-model.fit(x=X_train,y=y_train,validation_data=(X_test,y_test),epochs=10)
+model.fit(x=X_train,y=y_train,validation_data=(X_test,y_test),epochs=20)
 sol=model.predict(X_test) 
 print(sol)
 save('prediction',sol)        # saving predicted results

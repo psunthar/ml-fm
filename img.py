@@ -38,7 +38,7 @@ for r in range(1,100):
     b=np.ones((int(700-Tl/dx),40))  
     img=np.append(img,b,axis=0)        #adding rows of zeros at the end of matrix to give uniform shape
     #img[:-1,:]=a
-    print(np.shape(img))
+   #print(np.shape(img))
     img1=img.T
     plt.imsave('filename.png', np.array(img1), cmap=cm.gray)
     img2=np.flip(img1,0)
@@ -51,7 +51,7 @@ for r in range(1,100):
     
        # print(np.shape((a)))
     plt.imsave('image' +str(r)+'.png', np.array(img3), cmap=cm.gray)
-print(np.shape(img3))
+#print(np.shape(img3))
 save('data', a)
 save('AR_data',AR1)
 
