@@ -67,7 +67,7 @@ model.add(Dense(10,activation='relu'))
 model.add(Dense(4, activation='linear'))
 opt = keras.optimizers.Adam(learning_rate=0.001)
 model.compile(optimizer=opt,loss='mse')
-model.fit(x=X_train,y=y_train,batch_size=64,validation_data=(X_test,y_test),epochs=100)
+model.fit(x=X_train,y=y_train,batch_size=64,validation_data=(X_test,y_test),epochs=150)
 sol=model.predict(X_test)
 print(sol)
 save('prediction',sol)        # saving predicted results
