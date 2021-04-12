@@ -1,4 +1,9 @@
-import numpy as np	
+mport os
+#import tensorflow as tf
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = "2"
+
+import numpy as np
+import pandas as pd
 import sklearn
 from sklearn.model_selection import train_test_split
 from numpy import load
@@ -11,28 +16,59 @@ from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 import matplotlib.pyplot as plt
 from numpy import save
-import cv2
-Xdata = load('data.npy')
-Ydata = load('AR_data.npy')
-Y=np.dstack(Ydata)
-#print(np.shape(data.T))
-#print(np.shape(Y.T))
+from keras.layers import BatchNormalization
+
+############################################
+from tensorflow.compat.v1 import ConfigProto
+from tensorflow.compat.v1 import InteractiveSession
+
+config = ConfigProto()
+config.gpu_options.allow_growth = True
+session = InteractiveSession(config=config)
+
+##############################################
+
+#import os
+#import tensorflow as tf
+#os.environ['TF_CPP_MIN_LOG_LEVEL'] = "3"
+
+
+
+
+Xdata = load('rotate_data.npy')
+df=pd.read_csv("4_outputs.csv")
+df=df.values
+
+Y=np.dstack(df)
+
 X_train, X_test, y_train, y_test =train_test_split(Xdata.T,Y.T,test_size=0.3)
 print(np.shape(X_train))
-X_train = X_train.reshape(-1, 699, 80, 1)
-X_test = X_test.reshape(-1, 699, 80, 1)
+X_train = X_train.reshape(-1, 1000, 999, 1)
+X_test = X_test.reshape(-1, 1000, 999, 1)
 model =Sequential()
-model.add(Conv2D(14,(40,41), activation= 'relu',kernel_initializer='he_uniform'))
-model.add(MaxPooling2D((4,4)))
-model.add(Conv2D(3,(7,7), activation= 'relu'))
+model.add(Conv2D(4,(9,9),activation= 'relu'))
+#model.add(BatchNormalization())
+model.add(MaxPooling2D((2,2)))
+model.add(Conv2D(8,(7,7),activation= 'relu'))
+model.add(MaxPooling2D((2,2)))
+model.add(Conv2D(16,(5,5), activation= 'relu'))
+model.add(MaxPooling2D((2,2)))
+model.add(Conv2D(16,(5,5), activation= 'relu'))
+model.add(MaxPooling2D((2,2)))
+model.add(Conv2D(32,(3,3), activation= 'relu'))
+model.add(MaxPooling2D((2,2)))
+model.add(Conv2D(64,(1,1), activation= 'relu'))
 model.add(MaxPooling2D((2,2)))
 model.add(Flatten())
-model.add(Dense(4, activation='relu'))
-model.add(Dense(1, activation='linear'))
-opt = keras.optimizers.Adam(learning_rate=0.01)
+model.add(Dense(60, activation='relu'))
+model.add(Dense(30, activation='relu'))
+model.add(Dense(20,activation='relu'))
+model.add(Dense(10,activation='relu'))
+model.add(Dense(4, activation='linear'))
+opt = keras.optimizers.Adam(learning_rate=0.001)
 model.compile(optimizer=opt,loss='mse')
-model.fit(x=X_train,y=y_train,validation_data=(X_test,y_test),epochs=20)
-sol=model.predict(X_test) 
+model.fit(x=X_train,y=y_train,batch_size=64,validation_data=(X_test,y_test),epochs=100)
+sol=model.predict(X_test)
 print(sol)
 save('prediction',sol)        # saving predicted results
 save('testData',y_test)
@@ -40,3 +76,4 @@ save('testData',y_test)
 #plt.xlabel('original')
 #plt.ylabel('predicted')
 #plt.show()
+
