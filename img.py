@@ -4,20 +4,31 @@ import numpy as np
 from numpy import save
 from scipy.ndimage import rotate
 from PIL import Image
+import pandas as pd
 imageH=50
-AR1=[]
-np.array(AR1)
-for r in range(1,10):
+TL=[]
+np.array(TL)
+Ls=[]
+np.array(Ls)
+D0=[]
+np.array(D0)
+D1=[]
+np.array(D1)
+
+for r in range(1,5):
     l1=np.random.uniform(1,5)   #upto stenosis
     l=np.random.uniform(2,20)   #stenosis
     Tl=np.random.uniform(40,50) #total length
     
-    AR=np.random.uniform(1.1,7)
-    AR1.append(AR)
+    AR=np.random.uniform(1.1,4)
+    TL=np.append(TL,Tl)
+    Ls=np.append(Ls,l)
     d0=np.random.uniform(0.5,4)
     d1=(d0)/np.sqrt(AR)
     k=imageH-d0
     k1=imageH-d1
+    D0=np.append(D0,d0)
+    D1=np.append(D1,d1)
 
     def f1(x):
         if x<l1:
@@ -52,8 +63,8 @@ for r in range(1,10):
     im=Image.open("image1.png")
     #im.save("test.png")
     width,height=im.size
-    print(width)
-    print(height)   
+    #print(width)
+    #print(height)   
     sub_img=im.crop(box=(0,280,500,420)).rotate(10)
     #sub_img.save("test1.png")
     im.paste(sub_img,box=(0,300))
@@ -67,6 +78,11 @@ for r in range(1,10):
     
     plt.imsave('image' +str(r)+'.png', np.array(img3), cmap=cm.gray)
 #print(np.shape(img3))
+df=pd.DataFrame(data=TL,columns=['Length'])
+df['Stenosis_length']=Ls
+df['D0']=D0
+df['D1']=D1
+df.to_csv("4_outputs.csv",index=False)
 save('data', a)
-save('AR_data',AR1)
+#save('4_data',four_data)
 
