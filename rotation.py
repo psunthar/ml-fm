@@ -12,7 +12,8 @@ a.fill(1)
 a=a.astype('float64')
 plt.imsave('blank.png', a, cmap=cm.gray)
 
-for r in range(1,20):
+
+for r in range(1,800):
     angle=np.random.randint(1,90)
     canvas=Image.open("blank.png")
     
