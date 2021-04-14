@@ -7,22 +7,24 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 
 
-a=np.ones((1000,999,3))
+a=np.ones((1798,1799,3))
 a.fill(1)
+a=a.astype('float64')
 plt.imsave('blank.png', a, cmap=cm.gray)
 
-for r in range(1,2):
+for r in range(1,20):
     angle=np.random.randint(1,90)
     canvas=Image.open("blank.png")
     
     im=Image.open("image"+str(r)+".png")
 
     width,height=im.size
-   
+    print(width)
+    print(height)
 
-    width,height=im.size
+    #width,height=im.size
 
-    sub_img=im.crop(box=(10,200,700,800))
+    sub_img=im.crop(box=(5,100,1550,1600))#(left,upper,right,lower)[0,0] is top left
     sub_img=sub_img.rotate(angle)
 
     canvas.paste(sub_img,box=(50,200))
