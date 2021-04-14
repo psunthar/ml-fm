@@ -13,7 +13,7 @@ np.array(D0)
 D1=[]
 np.array(D1)
 
-for r in range(1,800):
+for r in range(1,20):
     #total length
 
     #AR=np.random.uniform(1.1,4)

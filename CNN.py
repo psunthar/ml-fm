@@ -1,4 +1,4 @@
-mport os
+import os
 #import tensorflow as tf
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = "2"
 
@@ -43,8 +43,8 @@ Y=np.dstack(df)
 
 X_train, X_test, y_train, y_test =train_test_split(Xdata.T,Y.T,test_size=0.3)
 print(np.shape(X_train))
-X_train = X_train.reshape(-1, 1000, 999, 1)
-X_test = X_test.reshape(-1, 1000, 999, 1)
+X_train = X_train.reshape(-1, 1798,1799, 1)
+X_test = X_test.reshape(-1, 1798, 1799, 1)
 model =Sequential()
 model.add(Conv2D(4,(9,9),activation= 'relu'))
 #model.add(BatchNormalization())
