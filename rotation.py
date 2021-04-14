@@ -9,7 +9,9 @@ import matplotlib.cm as cm
 
 a=np.ones((1798,1799,3))
 a.fill(1)
+
 a=a.astype('float64')
+print(type(a))
 plt.imsave('blank.png', a, cmap=cm.gray)
 
 
@@ -48,7 +50,7 @@ for r in range(1,800):
 
     data[data > 0] = 1
   
-    data.astype('float64')
+    data=data.astype('float64')
 
     plt.imsave('final'+str(r)+'.png', np.array(data), cmap=cm.gray)
     if r==1:
