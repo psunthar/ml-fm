@@ -7,16 +7,16 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 
 
-a=np.ones((1798,1799,3))
+a=np.ones((600,600,3))
 a.fill(1)
 
-a=a.astype('float64')
+#a=a.astype('float32')
 print(type(a))
 plt.imsave('blank.png', a, cmap=cm.gray)
 
 
-for r in range(1,800):
-    angle=np.random.randint(1,90)
+for r in range(1,2):
+    #angle=np.random.randint(1,90)
     canvas=Image.open("blank.png")
     
     im=Image.open("image"+str(r)+".png")
@@ -27,10 +27,10 @@ for r in range(1,800):
 
     #width,height=im.size
 
-    sub_img=im.crop(box=(5,100,1550,1600))#(left,upper,right,lower)[0,0] is top left
-    sub_img=sub_img.rotate(angle)
+    sub_img=im.crop(box=(5,50,550,550))#(left,upper,right,lower)[0,0] is top left
+    sub_img=sub_img.rotate(0)
 
-    canvas.paste(sub_img,box=(50,200))
+    canvas.paste(sub_img,box=(2,30))
 
     canvas.save("test2.png")
 
@@ -50,7 +50,7 @@ for r in range(1,800):
 
     data[data > 0] = 1
   
-    data=data.astype('float64')
+    data=data.astype('float32')
 
     plt.imsave('final'+str(r)+'.png', np.array(data), cmap=cm.gray)
     if r==1:

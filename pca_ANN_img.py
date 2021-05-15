@@ -24,4 +24,4 @@ print(pca.explained_variance_ratio_)
 
 X_test=pca.transform(X_test)
 
-~                                
+

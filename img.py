@@ -3,7 +3,7 @@ import matplotlib.cm as cm
 import numpy as np
 import pandas as pd
 from numpy import save
-imageH=.09
+imageH=.1
 TL=[]
 np.array(TL)
 Ls=[]
@@ -19,9 +19,8 @@ for r in range(1,800):
     #AR=np.random.uniform(1.1,4)
     d0=np.random.uniform(0.002,.004)
     d1=np.random.uniform(.4,.9)
-    d1=d1*d0
-    l1=np.random.uniform(1,5)   
-    l=np.random.uniform(1,4) 
+    d1=d1*d0 
+    l=np.random.uniform(1,4) #stenosis length
     l=l*d0
     Tl=np.random.uniform(.1,.15)
     l1=0.20*Tl          #upto stenosis
@@ -41,22 +40,23 @@ for r in range(1,800):
         if x>=l1+l:
             return k
 
-    dx=0.0001
+    dx=0.0004
     #img=np.ones((600,100))
     img=np.zeros((int(Tl/dx),int(imageH/dx)))
 
     for i in range(int(Tl/dx)):
         x=i*dx
         for j in range(int(f1(x)/dx)):
-       # print([i,j,f1(x)])
+       
             img[i,j]=1
-    #print(np.shape(img))
+    
+    
     #vertical image is generated now  
-    space_added=int(1800-(Tl/dx)-100)   #white space to be added in front
-    b=np.ones((space_added,899))
-    c=np.ones((100,899))
+    space_added=int(500-(Tl/dx)-50)   #white space to be added in front
+    b=np.ones((space_added,250))
+    c=np.ones((50,250))
     img=np.append(img,b,axis=0)        #adding rows of zeros at the end of matrix to give uniform shape
-    img=np.append(c,img,axis=0)
+    img=np.append(c,img,axis=0)        #adding at front
    #img[:-1,:]=a
     
     img1=img.T #horizontal image is generated
@@ -76,6 +76,10 @@ print(np.shape(img3))
 save('data', a)
 df=pd.DataFrame(data=TL,columns=['Length'])
 df['Stenosis_length']=Ls
+D0=int(D0/dx)
+D0=D0*dx
+D1=int(D1/dx)
+D1=D1*dx
 df['D0']=D0
 df['D1']=D1
 df.to_csv("4_outputs.csv",index=False)

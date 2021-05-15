@@ -11,7 +11,7 @@ from sklearn.decomposition import PCA
 
 df=pd.read_csv('data.csv')
 Y=df['Target_variable'].values
-X=df.drop(['Re','Rs','Pd','PS','Target_variable'], axis=1)
+X=df.drop(['Re','Rs','Pd','PS','Target_variable','Stenosis_length','D0','D1','Do','Lo','A0','A1','AR','Ps'], axis=1)
 print(X)
 X=X.values
 X_train,X_test,y_train,y_test=train_test_split(X,Y,test_size=.2,random_state=101)
