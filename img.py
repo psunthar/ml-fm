@@ -20,8 +20,8 @@ for r in range(1,5000):
     d0=np.random.uniform(0.002,.004)
     d1=np.random.uniform(.4,.9)
     d1=d1*d0
-    l1=np.random.uniform(1,5)
-    l=np.random.uniform(1,4)
+    l1=np.random.uniform(1,5)   
+    l=np.random.uniform(1,4) 
     l=l*d0
     Tl=np.random.uniform(.1,.15)
     l1=0.20*Tl          #upto stenosis
@@ -29,7 +29,7 @@ for r in range(1,5000):
     k1=imageH-d1
     dx=0.0004
    # Tot_l=Tl/dx
-   # TL=np.append(TL,Tl)
+    TL=np.append(TL,Tl)
    # Ls=np.append(Ls,l)
     dx=0.0004
     d0=int(d0/dx)
@@ -55,10 +55,10 @@ for r in range(1,5000):
     for i in range(int(Tl/dx)):
         x=i*dx
         for j in range(int(f1(x)/dx)):
-
+       
             img[i,j]=1
-
-
+    
+    
     #vertical image is generated now  
     space_added=int(500-(Tl/dx)-50)   #white space to be added in front
     b=np.ones((space_added,250))
@@ -66,7 +66,7 @@ for r in range(1,5000):
     img=np.append(img,b,axis=0)        #adding rows of zeros at the end of matrix to give uniform shape
     img=np.append(c,img,axis=0)        #adding at front
    #img[:-1,:]=a
-
+    
     img1=img.T #horizontal image is generated
    # print(np.shape(img))
     plt.imsave('filename.png', np.array(img1), cmap=cm.gray)
@@ -83,10 +83,13 @@ for r in range(1,5000):
 #print(np.shape(img3))
 save('data', a)
 df=pd.DataFrame(data=Ls,columns=['Stenosis_length'])
+df1=pd.DataFrame(data=TL, columns=['Total_Length'])
 #df['Stenosis_length']=Ls
 df['D0']=D0
 df['D1']=D1
 df.to_csv("3_outputs.csv",index=False)
+df1.to_csv("1_output1.csv",index=False)
 
 
 
+    
