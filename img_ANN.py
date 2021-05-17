@@ -8,10 +8,10 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-
+from numpy import save
 df=pd.read_csv('data.csv')
 Y=df['Target_variable'].values
-X=df.drop(['Re','Rs','Pd','PS','Target_variable','Stenosis_length','D0','D1','Do','Lo','A0','A1','AR','Ps'], axis=1)
+X=df.drop(['Re','Rs','Pd','PS','Target_variable'], axis=1)
 print(X)
 X=X.values
 X_train,X_test,y_train,y_test=train_test_split(X,Y,test_size=.2,random_state=101)
@@ -25,6 +25,7 @@ X_train=pca.transform(X_train)
 
 X_test=pca.transform(X_test)
 print(pca.explained_variance_ratio_)
+save("testing_data_final",X_test)
 
 model=Sequential()
 model.add(Dense(25,activation='relu'))
@@ -39,10 +40,15 @@ model.compile(optimizer=opt,loss='mse')
 
 model.fit(x=X_train,y=y_train,validation_data=(X_test,y_test),epochs=200)
 
-soln=model.predict(X_test)
-print(soln)
-plt.scatter(x=soln,y=y_test)
-plt.xlabel("Predicted Target")
-plt.ylabel("Actual Target")
-plt.show()
+#soln=model.predict(X_test)
+#print(soln)
+#plt.scatter(x=soln,y=y_test)
+#plt.xlabel("Predicted Target")
+#plt.ylabel("Actual Target")
+#plt.show()
+save("testing_data_finalANN",X_test)
+save("target_data_finalANN",y_test)
+
+model.save("modelANN_final.h5")
+print("Saved model to disk")
 

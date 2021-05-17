@@ -3,8 +3,8 @@ from numpy import load
 import matplotlib.pyplot as plt
 
 from sklearn.metrics import mean_squared_error as mse
-sol=load('prediction.npy')    #predicted data
-y_test=load('testData.npy')          #testing data
+sol=load('prediction_3.npy')    #predicted data
+y_test=load('target_Data_3.npy')          #testing data
 sl=len(sol)
 yl=len(y_test)
 predicted=sol.reshape((sl,3))

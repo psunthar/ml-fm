@@ -43,6 +43,7 @@ Y=np.dstack(df)
 
 X_train, X_test, y_train, y_test =train_test_split(Xdata.T,Y.T,test_size=0.2)
 print(np.shape(X_train))
+save('testing_data_1',X_test)
 X_train = X_train.reshape(-1, 600, 600, 1)
 X_test = X_test.reshape(-1, 600, 600, 1)
 model =Sequential()
@@ -80,8 +81,16 @@ model.add(Dense(1, activation='linear'))
 opt = keras.optimizers.Adam(learning_rate=0.001)
 model.compile(optimizer=opt,loss='mse')
 model.fit(x=X_train,y=y_train,batch_size=16,validation_data=(X_test,y_test),epochs=90)
-sol=model.predict(X_test)
-print(sol)
-save('prediction',sol)        # saving predicted results
-save('testData',y_test)
+#sol=model.predict(X_test)
+#print(sol)
+#save('prediction',sol)        # saving predicted results
+
+
+
+
+save('target_data_1',y_test)
+
+
+model.save("modelCNN_1.h5")
+print("Saved model to disk")
 
