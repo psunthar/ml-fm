@@ -15,7 +15,7 @@ a.fill(1)
 plt.imsave('blank.png', a, cmap=cm.gray)
 
 
-for r in range(1,3000):
+for r in range(1,5000):
     angle=np.random.randint(1,90)
     canvas=Image.open("blank.png")
 
@@ -28,7 +28,7 @@ for r in range(1,3000):
     #width,height=im.size
 
     sub_img=im.crop(box=(5,100,550,550))#(left,upper,right,lower)[0,0] is top left
-    if r%2==0:
+    if r%10==0:
 
         sub_img=sub_img.rotate(angle)
     else:
